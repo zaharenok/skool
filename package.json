@@ -42,11 +42,11 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/zaharenok/skapi-skool-n8n.git"
+    "url": "git+https://github.com/zaharenok/skool_publik_group_checker.git"
   },
-  "homepage": "https://github.com/zaharenok/skapi-skool-n8n#readme",
+  "homepage": "https://github.com/zaharenok/skool_publik_group_checker#readme",
   "bugs": {
-    "url": "https://github.com/zaharenok/skapi-skool-n8n/issues"
+    "url": "https://github.com/zaharenok/skool_publik_group_checker/issues"
   },
   "funding": {
     "type": "github",
