@@ -1,10 +1,12 @@
 {
-  "name": "n8n-node-skapi",
-  "version": "1.0.2",
+  "name": "@zaharenok/skool",
+  "version": "1.0.0",
   "description": "Automate Skool communities with n8n - check join requests, process approvals, monitor messages & notifications. Perfect for community managers. Join our community: https://skool.com/ai-pays-my-bills-7018/about",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
-  "files": ["dist"],
+  "files": [
+    "dist"
+  ],
   "scripts": {
     "build": "tsc",
     "dev": "tsc --watch",
@@ -40,11 +42,11 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/zaharenok/n8n-node-skapi.git"
+    "url": "git+https://github.com/zaharenok/skapi-skool-n8n.git"
   },
-  "homepage": "https://skapi.pro",
+  "homepage": "https://github.com/zaharenok/skapi-skool-n8n#readme",
   "bugs": {
-    "url": "https://github.com/zaharenok/n8n-node-skapi/issues"
+    "url": "https://github.com/zaharenok/skapi-skool-n8n/issues"
   },
   "funding": {
     "type": "github",
@@ -63,7 +65,9 @@
     "credentials": {
       "skapiApi": {
         "name": "SkAPI.pro API",
-        "required": ["jwtToken"]
+        "required": [
+          "jwtToken"
+        ]
       }
     },
     "nodes": [
@@ -71,7 +75,9 @@
         "name": "SkAPI.pro",
         "displayName": "SkAPI.pro",
         "icon": "file:skapi.svg",
-        "group": ["transform"],
+        "group": [
+          "transform"
+        ],
         "subgroup": "community",
         "version": 1,
         "description": "Automate Skool community management - join requests, messages, notifications. Get API key at https://skapi.pro",
@@ -79,9 +85,15 @@
           "name": "SkAPI.pro",
           "color": "#1a1a1a"
         },
-        "inputs": ["main"],
-        "outputs": ["main"],
-        "credentials": ["skapiApi"],
+        "inputs": [
+          "main"
+        ],
+        "outputs": [
+          "main"
+        ],
+        "credentials": [
+          "skapiApi"
+        ],
         "properties": [
           {
             "displayName": "Resource",
@@ -113,7 +125,9 @@
             "type": "options",
             "displayOptions": {
               "show": {
-                "resource": ["joinRequest"]
+                "resource": [
+                  "joinRequest"
+                ]
               }
             },
             "options": [
@@ -144,7 +158,9 @@
             "type": "options",
             "displayOptions": {
               "show": {
-                "resource": ["message"]
+                "resource": [
+                  "message"
+                ]
               }
             },
             "options": [
@@ -163,7 +179,9 @@
             "type": "options",
             "displayOptions": {
               "show": {
-                "resource": ["notification"]
+                "resource": [
+                  "notification"
+                ]
               }
             },
             "options": [
