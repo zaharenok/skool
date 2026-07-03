@@ -1,6 +1,6 @@
 {
   "name": "n8n-nodes-skool",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Automate Skool communities with n8n - check join requests, process approvals, monitor messages & notifications. Perfect for community managers. Join our community: https://skool.com/ai-pays-my-bills-7018/about",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
