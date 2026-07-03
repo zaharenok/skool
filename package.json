@@ -1,6 +1,6 @@
 {
-  "name": "@zaharenok/skool",
-  "version": "1.0.0",
+  "name": "n8n-nodes-skool",
+  "version": "1.0.1",
   "description": "Automate Skool communities with n8n - check join requests, process approvals, monitor messages & notifications. Perfect for community managers. Join our community: https://skool.com/ai-pays-my-bills-7018/about",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -80,7 +80,7 @@
         ],
         "subgroup": "community",
         "version": 1,
-        "description": "Automate Skool community management - join requests, messages, notifications. Get API key at https://skapi.pro",
+        "description": "Automate Skool community management - join requests, messages, notifications. Get API key at https://skapi.pro?utm_source=n8n&utm_medium=community_node&utm_campaign=skapi_integration",
         "defaults": {
           "name": "SkAPI.pro",
           "color": "#1a1a1a"
