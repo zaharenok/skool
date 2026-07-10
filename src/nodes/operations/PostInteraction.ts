@@ -18,7 +18,7 @@ export async function postInteraction(
 
   const response = await executeFunctions.helpers.httpRequest({
     method: 'POST',
-    url: 'https://api.skapi.pro/post-interaction',
+    url: 'http://api.skapi.pro/post-interaction',
     headers: { 'Content-Type': 'application/json' },
     body: {
       group,

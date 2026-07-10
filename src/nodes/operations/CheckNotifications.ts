@@ -13,7 +13,7 @@ export async function checkNotifications(
 ): Promise<any> {
   const response = await executeFunctions.helpers.httpRequest({
     method: 'POST',
-    url: 'https://api.skapi.pro/check-notifications',
+    url: 'http://api.skapi.pro/check-notifications',
     headers: { 'Content-Type': 'application/json' },
     body: {
       jwt_token: jwtToken,

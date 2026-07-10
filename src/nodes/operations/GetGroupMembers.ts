@@ -17,7 +17,7 @@ export async function getGroupMembers(
 
   const response = await executeFunctions.helpers.httpRequest({
     method: 'POST',
-    url: 'https://api.skapi.pro/group-members',
+    url: 'http://api.skapi.pro/group-members',
     headers: { 'Content-Type': 'application/json' },
     body: {
       group,

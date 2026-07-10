@@ -17,7 +17,7 @@ export async function getGroupPosts(
 
   const response = await executeFunctions.helpers.httpRequest({
     method: 'POST',
-    url: 'https://api.skapi.pro/group-posts',
+    url: 'http://api.skapi.pro/group-posts',
     headers: { 'Content-Type': 'application/json' },
     body: {
       group,

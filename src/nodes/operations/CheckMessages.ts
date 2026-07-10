@@ -16,7 +16,7 @@ export async function checkMessages(
 
   const response = await executeFunctions.helpers.httpRequest({
     method: 'POST',
-    url: 'https://api.skapi.pro/check-messages',
+    url: 'http://api.skapi.pro/check-messages',
     headers: { 'Content-Type': 'application/json' },
     body: {
       group: group,
