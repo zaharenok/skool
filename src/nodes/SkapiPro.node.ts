@@ -191,10 +191,10 @@ export class SkapiPro implements INodeType {
               'getGroupMembers'],
           },
         },
-        required: true,
+        required: false,
         default: '',
         placeholder: 'ai-pays-my-bills-7018',
-        description: 'Skool group URL, ID, or name',
+        description: 'Skool group URL, ID, or name. Falls back to credential default if empty.',
       },
 
       // Query (search)
@@ -318,8 +318,8 @@ export class SkapiPro implements INodeType {
 
     let jwtToken = '';
     let clientId: string | undefined;
+    let defaultGroup: string | undefined;
 
-    // Group Info doesn't need auth; others do
     if (resource !== 'groupInfo') {
       const credentials = await this.getCredentials('skapiApi');
       if (!credentials || !credentials.jwtToken) {
@@ -327,6 +327,7 @@ export class SkapiPro implements INodeType {
       }
       jwtToken = credentials.jwtToken as string;
       clientId = credentials.clientId as string | undefined;
+      defaultGroup = credentials.defaultGroup as string | undefined;
     }
 
     let result;
@@ -335,7 +336,7 @@ export class SkapiPro implements INodeType {
       case 'joinRequest':
         switch (operation) {
           case 'checkJoinRequests':
-            result = await checkJoinRequests(this, jwtToken, clientId);
+            result = await checkJoinRequests(this, jwtToken, clientId, defaultGroup);
             break;
           case 'processJoinRequest':
             result = await processJoinRequest(this, jwtToken, clientId);

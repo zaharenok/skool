@@ -9,9 +9,10 @@ import {
 export async function checkJoinRequests(
   executeFunctions: IExecuteFunctions,
   jwtToken: string,
-  clientId?: string
+  clientId?: string,
+  defaultGroup?: string
 ): Promise<any> {
-  const group = executeFunctions.getNodeParameter('group', 0) as string;
+  const group = (executeFunctions.getNodeParameter('group', 0) as string) || defaultGroup || '';
   const limit = executeFunctions.getNodeParameter('limit', 0) as number;
 
   const response = await executeFunctions.helpers.httpRequest({

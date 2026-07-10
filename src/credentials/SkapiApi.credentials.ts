@@ -10,7 +10,7 @@ import {
 export class SkapiApi implements ICredentialType {
   name = 'skapiApi';
   displayName = 'SkAPI.pro API';
-  documentationUrl = 'https://skapi.pro?utm_source=n8n&utm_medium=community_node&utm_campaign=skapi_integration';
+  documentationUrl = 'https://chromewebstore.google.com/detail/skapipro/nibelkfckbgkoohibdbmalmkmhbfblaf';
   properties: INodeProperties[] = [
     {
       displayName: 'JWT Token',
@@ -21,7 +21,15 @@ export class SkapiApi implements ICredentialType {
       },
       default: '',
       required: true,
-      description: 'JWT token from SkAPI.pro extension or account',
+      description: 'JWT token from SkAPI.pro Chrome Extension',
+    },
+    {
+      displayName: 'Default Group URL or ID',
+      name: 'defaultGroup',
+      type: 'string',
+      default: '',
+      placeholder: 'ai-pays-my-bills-7018',
+      description: 'Default Skool group to use when not specified in node. Can be overridden per operation.',
     },
     {
       displayName: 'Client ID (Optional)',
