@@ -27,9 +27,9 @@ export async function checkJoinRequests(
     json: true,
   });
 
-  if (response.success) {
-    return response.result;
+  if (response.detail) {
+    throw new Error(response.detail);
   }
 
-  throw new Error(`API Error: ${response.error || response.detail || 'Unknown error'}`);
+  return response;
 }
