@@ -1,15 +1,16 @@
 {
   "name": "n8n-nodes-skool",
-  "version": "1.4.0",
+  "version": "1.5.0",
   "description": "Skool API node for n8n - automate Skool communities: check and process join requests, monitor messages and notifications.",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "files": [
     "dist",
-    "skapi.svg"
+    "skapi.svg",
+    "skapi.dark.svg"
   ],
   "scripts": {
-    "build": "tsc && cp skapi.svg dist/nodes/skapi.svg",
+    "build": "tsc && cp skapi.svg dist/nodes/skapi.svg && cp skapi.dark.svg dist/nodes/skapi.dark.svg",
     "dev": "tsc --watch",
     "prepublishOnly": "npm run build",
     "test": "echo \"Error: no test specified\" && exit 1"

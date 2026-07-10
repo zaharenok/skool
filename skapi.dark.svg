@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="60" height="60" viewBox="0 0 60 60" fill="none">
-  <!-- Background circle -->
-  <circle cx="30" cy="30" r="28" fill="#6366F1"/>
+  <!-- Background circle - slightly different shade for dark mode -->
+  <circle cx="30" cy="30" r="28" fill="#818CF8"/>
   <!-- Stylized "S" for Skool -->
   <path d="M18 22C18 18.5 21 16 25 16H29C32.5 16 35 18.5 35 22C35 25.5 32.5 28 29 28H25" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
   <path d="M25 28H21C17.5 28 15 30.5 15 34C15 37.5 17.5 40 21 40H25" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>

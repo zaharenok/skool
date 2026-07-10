@@ -21,7 +21,10 @@ export class SkapiPro implements INodeType {
   description: INodeTypeDescription = {
     displayName: 'Skool API (Skapi.pro)',
     name: 'skapiPro',
-    icon: 'file:skapi.svg',
+    icon: {
+      light: 'file:skapi.svg',
+      dark: 'file:skapi.dark.svg',
+    },
     group: ['transform'],
     version: 1,
     subtitle: '={{$parameter["operation"]}}',
