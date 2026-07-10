@@ -1,227 +1,224 @@
-# SkAPI.pro n8n Node
+# Skool API (Skapi.pro) — n8n Node
 
 <div align="center">
 
-**Automate your Skool community with n8n!** 🚀
+**Automate your Skool community with n8n.** Manage join requests, monitor messages and notifications — all in your workflow.
 
-[![npm version](https://badge.fury.io/js/%40zaharenok%2Fskool.svg)](https://badge.fury.io/js/%40zaharenok%2Fskool)
+[![npm version](https://badge.fury.io/js/n8n-nodes-skool.svg)](https://www.npmjs.com/package/n8n-nodes-skool)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![n8n](https://img.shields.io/badge/n8n-compatible-green.svg)](https://n8n.io)
 
-Join our community: **[skool.com/ai-pays-my-bills-7018/about](https://www.skool.com/ai-pays-my-bills-7018/about)**
-
-Learn more: **[skapi.pro](https://skapi.pro?utm_source=n8n&utm_medium=community_node&utm_campaign=skapi_integration)**
+Website: **[skapi.pro](https://skapi.pro)** · Community: **[skool.com/ai-pays-my-bills-7018](https://www.skool.com/ai-pays-my-bills-7018/about)**
 
 </div>
 
 ---
 
-## ✨ Features
+## What this node does
 
-- ✅ **Check Join Requests** - Monitor pending join requests in real-time
-- ✅ **Process Join Requests** - Auto-approve or decline requests
-- ✅ **Check Messages** - Get new messages from your Skool groups
-- ✅ **Check Notifications** - Monitor Skool notifications
-- 🚧 **Send Welcome Messages** - Greet new members automatically (coming soon)
-- 🔐 **Secure Authentication** - JWT-based API authentication
-- 📊 **Rate Limiting** - Built-in quota management
+The **Skool API** node connects n8n to [SkAPI.pro](https://skapi.pro) — an API service that lets you automate management of your Skool.com communities. With this node you can:
 
-Perfect for community managers who want to automate their Skool workflows!
+- See who's waiting to join your group
+- Approve or decline join requests automatically
+- Read new messages in your groups
+- Pull your Skool notifications into any workflow
 
----
-
-## 🚧 Roadmap & Feedback
-
-**Some features are still in development:**
-- ⏳ Send Welcome Messages - auto-greet new members (API coming soon)
-- ⏳ Real-time WebSocket triggers for instant notifications
-- ⏳ Post operations and comment management
-- ⏳ Group analytics and member management
-
-**Need a feature or found a bug?**
-- 🐛 Report bugs: [GitHub Issues](https://github.com/zaharenok/@zaharenok/skool/issues)
-- 💡 Request features: [Join our community](https://www.skool.com/ai-pays-my-bills-7018/about) and post in #feature-requests
-- 📧 Email support: support@skapi.pro
-- 💬 Community chat: Get help from other users
-
-We're actively developing new features! Your feedback helps prioritize what to build next.
+Perfect for community managers who want to automate repetitive moderation work.
 
 ---
 
----
+## Installation
 
-## 📦 Installation
+### Via n8n UI (recommended)
 
-### Option 1: n8n Community Nodes (Recommended)
+1. Open n8n → **Settings** → **Community Nodes**
+2. Click **Install** and enter: `n8n-nodes-skool`
+3. Click **Install**, then restart n8n
 
-1. In n8n, go to **Settings** → **Community nodes**
-2. Click **Add** and enter: `@zaharenok/skool`
-3. Click **Install** and restart n8n
-
-### Option 2: npm Installation
-
-For self-hosted n8n:
+### Via npm (self-hosted)
 
 ```bash
-cd ~/.n8n
-npm install @zaharenok/skool
-n8n restart
+cd ~/.n8n/nodes
+npm install n8n-nodes-skool
+```
+
+Restart n8n after installing.
+
+---
+
+## Get your JWT token
+
+The node authenticates with a JWT token from SkAPI.pro. To get one:
+
+1. Sign up at **[skapi.pro](https://skapi.pro)**
+2. Install the **Skapi.pro Chrome Extension**
+3. Open the extension popup and copy your **JWT token**
+
+Then in n8n: add a **Skool API** node → **Create New Credential** → **Skapi.pro API** → paste the token → Save.
+
+---
+
+## Operations
+
+The node has three resources: **Join Request**, **Message**, and **Notification**. Each resource has one or more operations.
+
+### 1. Join Request
+
+#### Check Join Requests
+
+Returns the list of members waiting to be approved into a group.
+
+| Parameter | Required | Description |
+|-----------|----------|-------------|
+| Group URL or ID | yes | Skool group slug (e.g. `ai-pays-my-bills-7018`) or full URL |
+| Limit | no | Max number of results (default 20) |
+
+**Output** — an array of join request objects, each containing the applicant's name, profile URL, spam risk score and request date. Use this to review who wants to join.
+
+#### Process Join Request
+
+Approves or declines a specific join request.
+
+| Parameter | Required | Description |
+|-----------|----------|-------------|
+| Group URL or ID | yes | Skool group slug or URL |
+| Action | yes | `Approve` or `Decline` |
+| Search By | yes | How to find the request: `Name`, `Email`, or `Profile URL` |
+| Search Value | yes | The value to search for (e.g. `John Doe`) |
+
+**Output** — the result of the approve/decline action with the member's details.
+
+> Tip: chain this after **Check Join Requests** to process applicants automatically.
+
+#### Send Welcome Message *(coming soon)*
+
+Sends a welcome message to a newly approved member. This operation returns a placeholder for now — the API endpoint is under development.
+
+---
+
+### 2. Message
+
+#### Check Messages
+
+Returns new/unread messages across the authenticated account for a given group.
+
+| Parameter | Required | Description |
+|-----------|----------|-------------|
+| Group URL or ID | yes | Skool group slug or URL |
+| Limit | no | Max number of results (default 20) |
+
+**Output** — an array of message objects with sender, content, timestamp and read status.
+
+---
+
+### 3. Notification
+
+#### Check Notifications
+
+Returns recent Skool notifications (mentions, replies, follows, etc.) for the authenticated account.
+
+| Parameter | Required | Description |
+|-----------|----------|-------------|
+| *(no parameters)* | | Uses the JWT token from credentials |
+
+**Output** — an array of notification objects with type, text, link and timestamp.
+
+---
+
+## Example workflows
+
+### Auto-approve join requests
+
+Run every 5 minutes, check for pending requests, approve them, and log to Google Sheets.
+
+```
+Schedule Trigger (every 5 min)
+  → Skool API: Check Join Requests
+  → Split In Batches (loop over each request)
+  → Skool API: Process Join Request (Approve, Search By = Name)
+  → Google Sheets: Append row
+```
+
+### Notify on new messages in Slack
+
+```
+Schedule Trigger (every 10 min)
+  → Skool API: Check Messages
+  → Filter (only unread)
+  → Slack: Send message
+```
+
+### Daily digest of notifications
+
+```
+Schedule Trigger (daily 9am)
+  → Skool API: Check Notifications
+  → Summarize / Format
+  → Email: Send digest
 ```
 
 ---
 
-## 🔑 Getting Started
+## Credentials
 
-### 1. Get Your API Key
+The node uses a single credential type: **Skapi.pro API**.
 
-1. Visit [skapi.pro](https://skapi.pro?utm_source=n8n&utm_medium=community_node&utm_campaign=skapi_integration) and sign up
-2. Install the [SkAPI.pro Chrome Extension](https://skapi.pro?utm_source=n8n&utm_medium=community_node&utm_campaign=skapi_integration)
-3. Copy your JWT token from the extension
-
-### 2. Configure Credentials in n8n
-
-1. Add a **SkAPI.pro** node to your workflow
-2. Click **Create New Credential** → **SkAPI.pro API**
-3. Paste your JWT token
-4. Save credentials
+| Field | Required | Description |
+|-------|----------|-------------|
+| JWT Token | yes | Your Skapi.pro JWT token |
+| Client ID | no | Optional tracking ID |
 
 ---
 
-## 🎯 Use Cases
+## Rate limits
 
-### Auto-Approve Join Requests
+SkAPI.pro applies rate limits based on your plan:
 
-Never miss a join request again! Automatically approve new members and send them a welcome message.
+| Plan | Requests / month | Requests / minute |
+|------|------------------|-------------------|
+| Free | 100 | 10 |
+| Pro | 1,000 | 20 |
+| VIP | 2,000 | 50 |
 
-```
-Cron (5 min) → Check Join Requests → Loop → Approve → Welcome Message → Add to CRM
-```
-
-### Monitor Important Messages
-
-Get notified when important messages are posted in your community.
-
-```
-Cron (10 min) → Check Messages → Filter (Important) → Slack Notification
-```
-
-### Track Notifications
-
-Monitor all Skool notifications and act on important ones.
-
-```
-Cron (hourly) → Check Notifications → Filter (Mentions) → Email Alert
-```
+If you exceed the limit the API returns a 429 error and the node will surface it in the workflow. Upgrade at **[skapi.pro](https://skapi.pro)**.
 
 ---
 
-## 📖 Examples
+## API endpoints used
 
-### Check Join Requests
+The node calls the SkAPI.pro API at `https://api.skapi.pro`:
 
-```javascript
-// Node configuration
-Resource: Join Request
-Operation: Check Join Requests
-Group: ai-pays-my-bills-7018
-Limit: 20
-```
+| Operation | Method & path |
+|-----------|---------------|
+| Check Join Requests | `POST /check-join-requests` |
+| Process Join Request | `POST /process-join-request` |
+| Check Messages | `POST /check-messages` |
+| Check Notifications | `POST /check-notifications` |
 
-### Process Join Request
-
-```javascript
-// Node configuration
-Resource: Join Request
-Operation: Process Join Request
-Group: ai-pays-my-bills-7018
-Action: Approve
-Search By: Name
-Search Value: John Doe
-```
+Full API docs: **[skapi.pro/docs](https://skapi.pro/docs)**
 
 ---
 
-## 🔗 API Endpoints
+## Troubleshooting
 
-The node connects to these SkAPI.pro endpoints:
+**Node doesn't appear after install** — restart n8n. Community nodes only register on startup.
 
-- `POST /check-join-requests` - Get pending join requests
-- `POST /process-join-request` - Approve/decline requests
-- `POST /check-messages` - Get new messages
-- `POST /check-notifications` - Get Skool notifications
+**"The specified package could not be loaded"** — a known n8n loader bug. Remove the package, clear `~/.n8n/nodes/node_modules/n8n-nodes-skool` and `~/.n8n/nodes/package.json`, restart n8n and reinstall.
 
----
+**Authentication error** — your JWT token may have expired. Generate a fresh one in the Skapi.pro extension.
 
-## 📊 Rate Limits
-
-| Plan | Requests/Month | Price |
-|------|----------------|-------|
-| Free | 100 | $0 |
-| Pro | 1,000 | $9/mo |
-| Enterprise | Unlimited | $49/mo |
-
-Get your API key at [skapi.pro](https://skapi.pro?utm_source=n8n&utm_medium=community_node&utm_campaign=skapi_integration)
+**Rate limit (429)** — you've hit your plan's quota. Wait for the window to reset or upgrade your plan.
 
 ---
 
-## 🛠️ Development
+## Support
 
-```bash
-# Clone the repository
-git clone https://github.com/oleg-zaharenok/@zaharenok/skool.git
-cd @zaharenok/skool
-
-# Install dependencies
-npm install
-
-# Build the project
-npm run build
-
-# Watch mode (for development)
-npm run dev
-```
+- Docs: **[skapi.pro/docs](https://skapi.pro/docs)**
+- Email: **support@skapi.pro**
+- Community: **[skool.com/ai-pays-my-bills-7018](https://www.skool.com/ai-pays-my-bills-7018/about)**
 
 ---
 
-## 📚 Documentation
+## License
 
-- [Installation Guide](INSTALLATION.md)
-- [Workflow Examples](EXAMPLES.md)
-- [Contributing Guide](CONTRIBUTING.md)
-- [Changelog](CHANGELOG.md)
-
----
-
-## 🤝 Community & Support
-
-- **Join our community**: [skool.com/ai-pays-my-bills-7018/about](https://www.skool.com/ai-pays-my-bills-7018/about)
-- **Documentation**: [skapi.pro/docs](https://skapi.pro/docs?utm_source=n8n&utm_medium=community_node&utm_campaign=skapi_integration)
-- **GitHub Issues**: [Report a bug](https://github.com/oleg-zaharenok/@zaharenok/skool/issues)
-- **Email**: support@skapi.pro
-
----
-
-## 📝 License
-
-MIT License - see [LICENSE](LICENSE) for details.
-
----
-
-## 🌟 Show Your Support
-
-If you find this project useful, please consider:
-
-- ⭐ Starring it on GitHub
-- 📢 Sharing it with your community
-- 💬 [Joining our Skool community](https://www.skool.com/ai-pays-my-bills-7018/about)
-- 💖 [Sponsoring on GitHub](https://github.com/sponsors/oleg-zaharenok)
-
----
-
-<div align="center">
-
-**Made with ❤️ by [SkAPI.pro](https://skapi.pro?utm_source=n8n&utm_medium=community_node&utm_campaign=skapi_integration)**
-
-[Website](https://skapi.pro?utm_source=n8n&utm_medium=community_node&utm_campaign=skapi_integration) • [Community](https://www.skool.com/ai-pays-my-bills-7018/about) • [Documentation](https://skapi.pro/docs?utm_source=n8n&utm_medium=community_node&utm_campaign=skapi_integration)
-
-</div>
+MIT

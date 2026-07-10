@@ -3,5 +3,5 @@
  * Main entry point
  */
 
-export { SkapiProNode } from './nodes/SkapiPro.node';
-export { SkapiApiCredentials } from './credentials/SkapiApi.credentials';
+export { SkapiPro } from './nodes/SkapiPro.node';
+export { SkapiApi } from './credentials/SkapiApi.credentials';

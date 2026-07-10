@@ -1,5 +1,5 @@
 /**
- * SkAPI.pro Node for n8n
+ * Skool API (Skapi.pro) Node for n8n
  * Automate Skool communities
  */
 
@@ -8,6 +8,7 @@ import {
   INodeExecutionData,
   INodeType,
   INodeTypeDescription,
+  NodeConnectionTypes,
 } from 'n8n-workflow';
 
 import { checkJoinRequests } from './operations/CheckJoinRequests';
@@ -16,19 +17,20 @@ import { checkMessages } from './operations/CheckMessages';
 import { checkNotifications } from './operations/CheckNotifications';
 import { sendWelcomeMessage } from './operations/SendWelcomeMessage';
 
-export class SkapiProNode implements INodeType {
+export class SkapiPro implements INodeType {
   description: INodeTypeDescription = {
-    displayName: 'SkAPI.pro',
+    displayName: 'Skool API (Skapi.pro)',
     name: 'skapiPro',
     icon: 'file:skapi.svg',
     group: ['transform'],
     version: 1,
-    description: 'Automate Skool communities with SkAPI.pro',
+    subtitle: '={{$parameter["operation"]}}',
+    description: 'Automate Skool communities — manage join requests, messages and notifications',
     defaults: {
-      name: 'SkAPI.pro',
+      name: 'Skool API',
     },
-    inputs: ['main'],
-    outputs: ['main'],
+    inputs: [NodeConnectionTypes.Main],
+    outputs: [NodeConnectionTypes.Main],
     credentials: [
       {
         name: 'skapiApi',
@@ -73,19 +75,19 @@ export class SkapiProNode implements INodeType {
             name: 'Check Join Requests',
             value: 'checkJoinRequests',
             description: 'Get pending join requests',
-            action: 'checkJoinRequests',
+            action: 'Get join requests',
           },
           {
             name: 'Process Join Request',
             value: 'processJoinRequest',
             description: 'Approve or decline join request',
-            action: 'processJoinRequest',
+            action: 'Process join request',
           },
           {
             name: 'Send Welcome Message',
             value: 'sendWelcomeMessage',
             description: 'Send welcome message to new member',
-            action: 'sendWelcomeMessage',
+            action: 'Send welcome message',
           },
         ],
         default: 'checkJoinRequests',
@@ -104,7 +106,7 @@ export class SkapiProNode implements INodeType {
             name: 'Check Messages',
             value: 'checkMessages',
             description: 'Get new messages in group',
-            action: 'checkMessages',
+            action: 'Get messages',
           },
         ],
         default: 'checkMessages',
@@ -123,19 +125,18 @@ export class SkapiProNode implements INodeType {
             name: 'Check Notifications',
             value: 'checkNotifications',
             description: 'Get Skool notifications',
-            action: 'checkNotifications',
+            action: 'Get notifications',
           },
         ],
         default: 'checkNotifications',
       },
-      // Group URL parameter
       {
         displayName: 'Group URL or ID',
         name: 'group',
         type: 'string',
         displayOptions: {
           show: {
-            operation: ['checkJoinRequests', 'sendWelcomeMessage', 'checkMessages'],
+            operation: ['checkJoinRequests', 'processJoinRequest', 'sendWelcomeMessage', 'checkMessages'],
           },
         },
         required: true,
@@ -143,7 +144,6 @@ export class SkapiProNode implements INodeType {
         placeholder: 'ai-pays-my-bills-7018',
         description: 'Skool group URL or ID',
       },
-      // Process Join Request parameters
       {
         displayName: 'Action',
         name: 'action',
@@ -203,7 +203,6 @@ export class SkapiProNode implements INodeType {
         default: '',
         placeholder: 'John Doe',
       },
-      // Welcome message parameters
       {
         displayName: 'Welcome Message',
         name: 'welcomeMessage',
@@ -220,7 +219,6 @@ export class SkapiProNode implements INodeType {
           rows: 4,
         },
       },
-      // Additional options
       {
         displayName: 'Limit',
         name: 'limit',
@@ -251,80 +249,55 @@ export class SkapiProNode implements INodeType {
     const jwtToken = credentials.jwtToken as string;
     const clientId = credentials.clientId as string | undefined;
 
-    try {
-      let result;
+    let result;
 
-      switch (resource) {
-        case 'joinRequest':
-          switch (operation) {
-            case 'checkJoinRequests':
-              result = await checkJoinRequests(
-                this,
-                jwtToken,
-                clientId
-              );
-              break;
-            case 'processJoinRequest':
-              result = await processJoinRequest(
-                this,
-                jwtToken,
-                clientId
-              );
-              break;
-            case 'sendWelcomeMessage':
-              result = await sendWelcomeMessage(
-                this,
-                jwtToken,
-                clientId
-              );
-              break;
-            default:
-              throw new Error(`Unknown operation: ${operation}`);
-          }
-          break;
+    switch (resource) {
+      case 'joinRequest':
+        switch (operation) {
+          case 'checkJoinRequests':
+            result = await checkJoinRequests(this, jwtToken, clientId);
+            break;
+          case 'processJoinRequest':
+            result = await processJoinRequest(this, jwtToken, clientId);
+            break;
+          case 'sendWelcomeMessage':
+            result = await sendWelcomeMessage(this, jwtToken, clientId);
+            break;
+          default:
+            throw new Error(`Unknown operation: ${operation}`);
+        }
+        break;
 
-        case 'message':
-          switch (operation) {
-            case 'checkMessages':
-              result = await checkMessages(
-                this,
-                jwtToken,
-                clientId
-              );
-              break;
-            default:
-              throw new Error(`Unknown operation: ${operation}`);
-          }
-          break;
+      case 'message':
+        switch (operation) {
+          case 'checkMessages':
+            result = await checkMessages(this, jwtToken, clientId);
+            break;
+          default:
+            throw new Error(`Unknown operation: ${operation}`);
+        }
+        break;
 
-        case 'notification':
-          switch (operation) {
-            case 'checkNotifications':
-              result = await checkNotifications(
-                this,
-                jwtToken,
-                clientId
-              );
-              break;
-            default:
-              throw new Error(`Unknown operation: ${operation}`);
-          }
-          break;
+      case 'notification':
+        switch (operation) {
+          case 'checkNotifications':
+            result = await checkNotifications(this, jwtToken, clientId);
+            break;
+          default:
+            throw new Error(`Unknown operation: ${operation}`);
+        }
+        break;
 
-        default:
-          throw new Error(`Unknown resource: ${resource}`);
-      }
-
-      // Format result for n8n
-      if (Array.isArray(result)) {
-        returnData.push(...result.map(item => ({ json: item })));
-      } else {
-        returnData.push({ json: result });
-      }
-
-      return [returnData];
-    } catch (error) {
-      throw error;
+      default:
+        throw new Error(`Unknown resource: ${resource}`);
     }
+
+    if (Array.isArray(result)) {
+      returnData.push(...result.map(item => ({ json: item })));
+    } else {
+      returnData.push({ json: result });
+    }
+
+    return [returnData];
   }
 }

@@ -1,14 +1,15 @@
 {
   "name": "n8n-nodes-skool",
-  "version": "1.0.3",
-  "description": "Automate Skool communities with n8n - check join requests, process approvals, monitor messages & notifications. Perfect for community managers. Join our community: https://skool.com/ai-pays-my-bills-7018/about",
+  "version": "1.4.0",
+  "description": "Skool API node for n8n - automate Skool communities: check and process join requests, monitor messages and notifications.",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "files": [
-    "dist"
+    "dist",
+    "skapi.svg"
   ],
   "scripts": {
-    "build": "tsc",
+    "build": "tsc && cp skapi.svg dist/nodes/skapi.svg",
     "dev": "tsc --watch",
     "prepublishOnly": "npm run build",
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -52,9 +53,9 @@
     "type": "github",
     "url": "https://github.com/sponsors/oleg-zaharenok"
   },
-  "dependencies": {
-    "n8n-workflow": "^1.0.0",
-    "axios": "^1.6.0"
+  "dependencies": {},
+  "peerDependencies": {
+    "n8n-workflow": "*"
   },
   "devDependencies": {
     "@types/node": "^20.0.0",

@@ -5,7 +5,6 @@
 import {
   IExecuteFunctions,
 } from 'n8n-workflow';
-import axios from 'axios';
 
 export async function processJoinRequest(
   executeFunctions: IExecuteFunctions,
@@ -17,32 +16,23 @@ export async function processJoinRequest(
   const searchBy = executeFunctions.getNodeParameter('searchBy', 0) as string;
   const searchValue = executeFunctions.getNodeParameter('searchValue', 0) as string;
 
-  try {
-    const response = await axios.post(
-      'https://api.skapi.pro/process-join-request',
-      {
-        group: group,
-        action: action,
-        [searchBy]: searchValue,
-        jwt_token: jwtToken,
-        client_id: clientId,
-      },
-      {
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      }
-    );
+  const response = await fetch('https://api.skapi.pro/process-join-request', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      group: group,
+      action: action,
+      [searchBy]: searchValue,
+      jwt_token: jwtToken,
+      client_id: clientId,
+    }),
+  });
 
-    if (response.data.success) {
-      return response.data.result;
-    } else {
-      throw new Error(response.data.error || 'Failed to process join request');
-    }
-  } catch (error) {
-    if (axios.isAxiosError(error)) {
-      throw new Error(`API Error: ${error.response?.data?.detail || error.message}`);
-    }
-    throw error;
+  const data = await response.json() as any;
+
+  if (response.ok && data.success) {
+    return data.result;
   }
+
+  throw new Error(`API Error: ${data.detail || data.error || response.statusText}`);
 }

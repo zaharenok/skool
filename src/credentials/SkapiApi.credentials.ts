@@ -7,7 +7,7 @@ import {
   INodeProperties,
 } from 'n8n-workflow';
 
-export class SkapiApiCredentials implements ICredentialType {
+export class SkapiApi implements ICredentialType {
   name = 'skapiApi';
   displayName = 'SkAPI.pro API';
   documentationUrl = 'https://skapi.pro?utm_source=n8n&utm_medium=community_node&utm_campaign=skapi_integration';
