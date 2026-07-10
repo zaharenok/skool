@@ -18,7 +18,7 @@ export async function processJoinRequest(
 
   const response = await executeFunctions.helpers.httpRequest({
     method: 'POST',
-    url: 'http://api.skapi.pro/process-join-request',
+    url: 'https://api.skapi.pro/process-join-request',
     headers: { 'Content-Type': 'application/json' },
     body: {
       group: group,

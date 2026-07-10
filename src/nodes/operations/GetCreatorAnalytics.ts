@@ -24,7 +24,7 @@ export async function getCreatorAnalytics(
 
   const response = await executeFunctions.helpers.httpRequest({
     method: 'POST',
-    url: 'http://api.skapi.pro/creator-analytics',
+    url: 'https://api.skapi.pro/creator-analytics',
     headers: { 'Content-Type': 'application/json' },
     body,
     json: true,

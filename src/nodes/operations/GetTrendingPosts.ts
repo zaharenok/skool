@@ -16,7 +16,7 @@ export async function getTrendingPosts(
 
   const response = await executeFunctions.helpers.httpRequest({
     method: 'POST',
-    url: 'http://api.skapi.pro/group-posts/trending',
+    url: 'https://api.skapi.pro/group-posts/trending',
     headers: { 'Content-Type': 'application/json' },
     body: {
       group,

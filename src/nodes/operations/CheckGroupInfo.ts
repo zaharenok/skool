@@ -16,7 +16,7 @@ export async function checkGroupInfo(
 
   const response = await executeFunctions.helpers.httpRequest({
     method: 'POST',
-    url: 'http://api.skapi.pro/check-group',
+    url: 'https://api.skapi.pro/check-group',
     headers: { 'Content-Type': 'application/json' },
     body: {
       group: group,

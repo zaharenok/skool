@@ -17,7 +17,7 @@ export async function searchPosts(
 
   const response = await executeFunctions.helpers.httpRequest({
     method: 'POST',
-    url: 'http://api.skapi.pro/group-posts/search',
+    url: 'https://api.skapi.pro/group-posts/search',
     headers: { 'Content-Type': 'application/json' },
     body: {
       group,
