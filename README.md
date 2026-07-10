@@ -60,7 +60,7 @@ Then in n8n: add a **Skool API** node → **Create New Credential** → **Skapi.
 
 ## Operations
 
-The node has eight resources: **Join Request**, **Message**, **Notification**, **Group Info**, **Post**, **Member**, **Analytics**, and **Interaction**.
+The node has nine resources: **Join Request**, **Message**, **Notification**, **Group Info**, **Post**, **Member**, **Analytics**, **Interaction**, and **Usage**.
 
 ### 1. Join Request
 
@@ -192,6 +192,16 @@ Like, unlike, or check likes on a post.
 | Post ID or URL | yes | Post ID or full URL |
 | Action | yes | `Like`, `Unlike`, or `Get Likes` |
 
+### 9. Usage
+
+#### Get Usage Stats
+
+Returns your API usage statistics — monthly quota, used requests, and remaining.
+
+No parameters needed (uses your JWT token from credentials).
+
+**Output** — monthly quota, used, remaining, requests last minute.
+
 ---
 
 ## Example workflows
@@ -272,6 +282,7 @@ The node calls the SkAPI.pro API at `https://skoolpublikgroupchecker-production.
 | Get Members | `POST /group-members` |
 | Get Creator Analytics | `POST /creator-analytics` |
 | Post Interaction | `POST /post-interaction` |
+| Get Usage Stats | `GET /rate-limit/stats` |
 
 Full API docs: **[skapi.pro/docs](https://skapi.pro/docs)**
 
