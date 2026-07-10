@@ -1,0 +1,37 @@
+/**
+ * Get Post Comments Operation
+ */
+
+import {
+  IExecuteFunctions,
+} from 'n8n-workflow';
+
+export async function getPostComments(
+  executeFunctions: IExecuteFunctions,
+  jwtToken: string,
+  clientId?: string
+): Promise<any> {
+  const group = executeFunctions.getNodeParameter('group', 0) as string;
+  const postId = executeFunctions.getNodeParameter('postId', 0) as string;
+  const limit = executeFunctions.getNodeParameter('limit', 0) as number;
+
+  const response = await executeFunctions.helpers.httpRequest({
+    method: 'POST',
+    url: 'https://skoolpublikgroupchecker-production.up.railway.app/group-posts/' + encodeURIComponent(postId) + '/comments',
+    headers: { 'Content-Type': 'application/json' },
+    body: {
+      group,
+      post_id: postId,
+      limit: limit || 20,
+      jwt_token: jwtToken,
+      client_id: clientId,
+    },
+    json: true,
+  });
+
+  if (response.success) {
+    return response;
+  }
+
+  throw new Error(`API Error: ${response.error || 'Unknown error'}`);
+}

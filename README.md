@@ -60,7 +60,7 @@ Then in n8n: add a **Skool API** node → **Create New Credential** → **Skapi.
 
 ## Operations
 
-The node has three resources: **Join Request**, **Message**, and **Notification**. Each resource has one or more operations.
+The node has eight resources: **Join Request**, **Message**, **Notification**, **Group Info**, **Post**, **Member**, **Analytics**, and **Interaction**.
 
 ### 1. Join Request
 
@@ -73,7 +73,7 @@ Returns the list of members waiting to be approved into a group.
 | Group URL or ID | yes | Skool group slug (e.g. `ai-pays-my-bills-7018`) or full URL |
 | Limit | no | Max number of results (default 20) |
 
-**Output** — an array of join request objects, each containing the applicant's name, profile URL, spam risk score and request date. Use this to review who wants to join.
+**Output** — an array of join request objects.
 
 #### Process Join Request
 
@@ -83,45 +83,114 @@ Approves or declines a specific join request.
 |-----------|----------|-------------|
 | Group URL or ID | yes | Skool group slug or URL |
 | Action | yes | `Approve` or `Decline` |
-| Search By | yes | How to find the request: `Name`, `Email`, or `Profile URL` |
+| Search By | yes | `Name`, `Email`, or `Profile URL` |
 | Search Value | yes | The value to search for (e.g. `John Doe`) |
 
-**Output** — the result of the approve/decline action with the member's details.
-
-> Tip: chain this after **Check Join Requests** to process applicants automatically.
-
 #### Send Welcome Message *(coming soon)*
-
-Sends a welcome message to a newly approved member. This operation returns a placeholder for now — the API endpoint is under development.
-
----
 
 ### 2. Message
 
 #### Check Messages
 
-Returns new/unread messages across the authenticated account for a given group.
+Returns new/unread messages for a given group.
 
 | Parameter | Required | Description |
 |-----------|----------|-------------|
 | Group URL or ID | yes | Skool group slug or URL |
 | Limit | no | Max number of results (default 20) |
 
-**Output** — an array of message objects with sender, content, timestamp and read status.
-
----
-
 ### 3. Notification
 
 #### Check Notifications
 
-Returns recent Skool notifications (mentions, replies, follows, etc.) for the authenticated account.
+Returns recent Skool notifications (mentions, replies, etc.).
+
+### 4. Group Info
+
+#### Check Group Info
+
+Returns public information about a group. **Does not require authentication.**
 
 | Parameter | Required | Description |
 |-----------|----------|-------------|
-| *(no parameters)* | | Uses the JWT token from credentials |
+| Group URL or ID | yes | Skool group slug or URL |
 
-**Output** — an array of notification objects with type, text, link and timestamp.
+**Output** — group name, description, member count, access type.
+
+### 5. Post
+
+#### Get Posts
+
+Fetches posts from a group.
+
+| Parameter | Required | Description |
+|-----------|----------|-------------|
+| Group URL or ID | yes | Skool group slug or URL |
+| Limit | no | Max results (default 20) |
+| Offset | no | Pagination offset |
+
+#### Search Posts
+
+Search posts in a group by keyword.
+
+| Parameter | Required | Description |
+|-----------|----------|-------------|
+| Group URL or ID | yes | Skool group slug or URL |
+| Search Query | yes | Search term |
+| Limit | no | Max results (default 20) |
+
+#### Get Trending Posts
+
+Returns trending posts from a group.
+
+| Parameter | Required | Description |
+|-----------|----------|-------------|
+| Group URL or ID | yes | Skool group slug or URL |
+| Limit | no | Max results (default 20) |
+
+#### Get Post Comments
+
+Fetches comments on a specific post.
+
+| Parameter | Required | Description |
+|-----------|----------|-------------|
+| Group URL or ID | yes | Skool group slug or URL |
+| Post ID or URL | yes | Post ID or full URL |
+| Limit | no | Max results (default 20) |
+
+### 6. Member
+
+#### Get Members
+
+Returns members of a group.
+
+| Parameter | Required | Description |
+|-----------|----------|-------------|
+| Group URL or ID | yes | Skool group slug or URL |
+| Limit | no | Max results (default 20) |
+| Offset | no | Pagination offset |
+
+### 7. Analytics
+
+#### Get Creator Analytics
+
+Returns analytics for your creator account (total posts, likes, comments, members).
+
+| Parameter | Required | Description |
+|-----------|----------|-------------|
+| Group Filter | no | Filter analytics by specific group |
+
+### 8. Interaction
+
+#### Post Interaction
+
+Like, unlike, or check likes on a post.
+
+| Parameter | Required | Description |
+|-----------|----------|-------------|
+| Group URL or ID | yes | Skool group slug or URL |
+| Post ID or URL | yes | Post ID or full URL |
+| Action | yes | `Like`, `Unlike`, or `Get Likes` |
 
 ---
 
@@ -192,8 +261,17 @@ The node calls the SkAPI.pro API at `https://skoolpublikgroupchecker-production.
 |-----------|---------------|
 | Check Join Requests | `POST /check-join-requests` |
 | Process Join Request | `POST /process-join-request` |
+| Send Welcome Message | *(placeholder)* |
 | Check Messages | `POST /check-messages` |
 | Check Notifications | `POST /check-notifications` |
+| Check Group Info | `POST /check-group` |
+| Get Posts | `POST /group-posts` |
+| Search Posts | `POST /group-posts/search` |
+| Get Trending Posts | `POST /group-posts/trending` |
+| Get Post Comments | `POST /group-posts/{id}/comments` |
+| Get Members | `POST /group-members` |
+| Get Creator Analytics | `POST /creator-analytics` |
+| Post Interaction | `POST /post-interaction` |
 
 Full API docs: **[skapi.pro/docs](https://skapi.pro/docs)**
 
