@@ -8,7 +8,7 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![n8n](https://img.shields.io/badge/n8n-compatible-green.svg)](https://n8n.io)
 
-Website: **[skapi.pro](https://skapi.pro)** · Community: **[skool.com/ai-pays-my-bills-7018](https://www.skool.com/ai-pays-my-bills-7018/about)**
+> Website: **[skapi.pro](https://skapi.pro)** · Chrome Extension: **[Skapi.pro](https://chromewebstore.google.com/detail/skapipro/nibelkfckbgkoohibdbmalmkmhbfblaf)** · Community: **[skool.com/ai-pays-my-bills-7018](https://www.skool.com/ai-pays-my-bills-7018/about)**
 
 </div>
 
@@ -51,7 +51,7 @@ Restart n8n after installing.
 The node authenticates with a JWT token from SkAPI.pro. To get one:
 
 1. Sign up at **[skapi.pro](https://skapi.pro)**
-2. Install the **Skapi.pro Chrome Extension**
+2. Install the **Skapi.pro Chrome Extension** from [Chrome Web Store](https://chromewebstore.google.com/detail/skapipro/nibelkfckbgkoohibdbmalmkmhbfblaf)
 3. Open the extension popup and copy your **JWT token**
 
 Then in n8n: add a **Skool API** node → **Create New Credential** → **Skapi.pro API** → paste the token → Save.

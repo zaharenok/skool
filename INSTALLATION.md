@@ -55,7 +55,7 @@ Then restart n8n.
 
 ### 1. Get Your JWT Token
 
-1. Install the [SkAPI.pro Chrome Extension](https://skapi.pro)
+1. Install the [SkAPI.pro Chrome Extension](https://chromewebstore.google.com/detail/skapipro/nibelkfckbgkoohibdbmalmkmhbfblaf) from Chrome Web Store
 2. Open the extension popup
 3. Copy your JWT token
 
