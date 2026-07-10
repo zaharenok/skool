@@ -24,5 +24,9 @@ export async function checkGroupInfo(
     json: true,
   });
 
+  if (response.result) {
+    response.result.members_count_num = parseInt(response.result.members_count || '0', 10);
+  }
+
   return response;
 }
