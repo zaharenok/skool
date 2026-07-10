@@ -11,20 +11,20 @@ export async function checkNotifications(
   jwtToken: string,
   clientId?: string
 ): Promise<any> {
-  const response = await fetch('https://api.skapi.pro/check-notifications', {
+  const response = await executeFunctions.helpers.httpRequest({
     method: 'POST',
+    url: 'https://api.skapi.pro/check-notifications',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({
+    body: {
       jwt_token: jwtToken,
       client_id: clientId,
-    }),
+    },
+    json: true,
   });
 
-  const data = await response.json() as any;
-
-  if (response.ok && data.success) {
-    return data.result;
+  if (response.success) {
+    return response.result;
   }
 
-  throw new Error(`API Error: ${data.detail || data.error || response.statusText}`);
+  throw new Error(`API Error: ${response.error || response.detail || 'Unknown error'}`);
 }

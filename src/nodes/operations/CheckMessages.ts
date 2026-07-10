@@ -14,22 +14,22 @@ export async function checkMessages(
   const group = executeFunctions.getNodeParameter('group', 0) as string;
   const limit = executeFunctions.getNodeParameter('limit', 0) as number;
 
-  const response = await fetch('https://api.skapi.pro/check-messages', {
+  const response = await executeFunctions.helpers.httpRequest({
     method: 'POST',
+    url: 'https://api.skapi.pro/check-messages',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({
+    body: {
       group: group,
       limit: limit || 20,
       jwt_token: jwtToken,
       client_id: clientId,
-    }),
+    },
+    json: true,
   });
 
-  const data = await response.json() as any;
-
-  if (response.ok && data.success) {
-    return data.result;
+  if (response.success) {
+    return response.result;
   }
 
-  throw new Error(`API Error: ${data.detail || data.error || response.statusText}`);
+  throw new Error(`API Error: ${response.error || response.detail || 'Unknown error'}`);
 }

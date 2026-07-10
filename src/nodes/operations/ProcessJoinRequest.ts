@@ -16,23 +16,23 @@ export async function processJoinRequest(
   const searchBy = executeFunctions.getNodeParameter('searchBy', 0) as string;
   const searchValue = executeFunctions.getNodeParameter('searchValue', 0) as string;
 
-  const response = await fetch('https://api.skapi.pro/process-join-request', {
+  const response = await executeFunctions.helpers.httpRequest({
     method: 'POST',
+    url: 'https://api.skapi.pro/process-join-request',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({
+    body: {
       group: group,
       action: action,
       [searchBy]: searchValue,
       jwt_token: jwtToken,
       client_id: clientId,
-    }),
+    },
+    json: true,
   });
 
-  const data = await response.json() as any;
-
-  if (response.ok && data.success) {
-    return data.result;
+  if (response.success) {
+    return response.result;
   }
 
-  throw new Error(`API Error: ${data.detail || data.error || response.statusText}`);
+  throw new Error(`API Error: ${response.error || response.detail || 'Unknown error'}`);
 }
