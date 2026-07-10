@@ -28,8 +28,8 @@ export async function checkJoinRequests(
   });
 
   if (response.detail) {
-    throw new Error(response.detail);
+    throw new Error(typeof response.detail === 'string' ? response.detail : JSON.stringify(response.detail));
   }
 
-  return response;
+  return response.join_requests || response;
 }
