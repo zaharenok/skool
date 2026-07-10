@@ -441,10 +441,25 @@ export class SkapiPro implements INodeType {
         throw new Error(`Unknown resource: ${resource}`);
     }
 
+    const seen = new WeakSet();
+    const safe = (obj: any): any => {
+      if (obj !== null && typeof obj === 'object') {
+        if (seen.has(obj)) return '[Circular]';
+        seen.add(obj);
+        if (Array.isArray(obj)) return obj.map(safe);
+        const plain: any = {};
+        for (const key of Object.keys(obj)) {
+          plain[key] = safe((obj as any)[key]);
+        }
+        return plain;
+      }
+      return obj;
+    };
+
     if (Array.isArray(result)) {
-      returnData.push(...result.map(item => ({ json: item })));
+      returnData.push(...result.map(item => ({ json: safe(item) })));
     } else {
-      returnData.push({ json: result });
+      returnData.push({ json: safe(result) });
     }
 
     return [returnData];
