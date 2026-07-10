@@ -186,7 +186,7 @@ If you exceed the limit the API returns a 429 error and the node will surface it
 
 ## API endpoints used
 
-The node calls the SkAPI.pro API at `https://api.skapi.pro`:
+The node calls the SkAPI.pro API at `https://skoolpublikgroupchecker-production.up.railway.app`:
 
 | Operation | Method & path |
 |-----------|---------------|

@@ -1,0 +1,31 @@
+{
+  "name": "n8n-nodes-miniskool",
+  "version": "1.0.0",
+  "description": "Minimal n8n community node for testing",
+  "main": "dist/indexMin.js",
+  "types": "dist/indexMin.d.ts",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsc --project tsconfig.min.json",
+    "prepublishOnly": "npm run build"
+  },
+  "keywords": [
+    "n8n-community-node-package"
+  ],
+  "author": "Oleg Zaharenok <oleg@skapi.pro>",
+  "license": "MIT",
+  "n8n": {
+    "n8nNodesApiVersion": 1,
+    "credentials": [
+      "dist/credentials/MinSkool.credentials.js"
+    ],
+    "nodes": [
+      "dist/nodes/MinSkool.node.js"
+    ]
+  },
+  "peerDependencies": {
+    "n8n-workflow": "*"
+  }
+}

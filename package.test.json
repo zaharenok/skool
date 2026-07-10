@@ -1,0 +1,23 @@
+{
+  "name": "n8n-nodes-testskool",
+  "version": "1.0.0",
+  "description": "Test n8n community node",
+  "main": "dist/indexTest.js",
+  "types": "dist/indexTest.d.ts",
+  "files": ["dist"],
+  "scripts": {
+    "build": "tsc --project tsconfig.test.json",
+    "prepublishOnly": "npm run build"
+  },
+  "keywords": ["n8n-community-node-package"],
+  "author": "Oleg Zaharenok <oleg@skapi.pro>",
+  "license": "MIT",
+  "n8n": {
+    "n8nNodesApiVersion": 1,
+    "credentials": ["dist/credentials/TestSkool.credentials.js"],
+    "nodes": ["dist/nodes/TestSkool.node.js"]
+  },
+  "peerDependencies": {
+    "n8n-workflow": "*"
+  }
+}
