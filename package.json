@@ -1,6 +1,6 @@
 {
   "name": "n8n-nodes-skool",
-  "version": "2.2.6",
+  "version": "2.2.7",
   "description": "Skool API node for n8n - automate Skool communities: check and process join requests, monitor messages and notifications.",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
