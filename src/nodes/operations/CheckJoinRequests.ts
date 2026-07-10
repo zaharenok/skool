@@ -31,5 +31,11 @@ export async function checkJoinRequests(
     throw new Error(typeof response.detail === 'string' ? response.detail : JSON.stringify(response.detail));
   }
 
-  return response.join_requests || response;
+  const data: any = response.join_requests || response;
+  data.pending_count = response.join_requests?.has_requests
+    ? parseInt(response.join_requests.count_text || '0', 10)
+    : 0;
+  data.users = response.join_requests?.users_data || (response as any).users || [];
+
+  return data;
 }
