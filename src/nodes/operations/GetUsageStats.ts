@@ -14,7 +14,7 @@ export async function getUsageStats(
 ): Promise<any> {
   const response = await executeFunctions.helpers.httpRequest({
     method: 'GET',
-    url: 'https://skoolpublikgroupchecker-production.up.railway.app/rate-limit/stats?jwt_token=' + encodeURIComponent(jwtToken),
+    url: 'https://api.skapi.pro/rate-limit/stats?jwt_token=' + encodeURIComponent(jwtToken),
     headers: {
       'X-JWT-Token': jwtToken,
       'X-Client-ID': clientId || 'n8n-node',

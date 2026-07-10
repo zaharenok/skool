@@ -16,7 +16,7 @@ export async function checkJoinRequests(
 
   const response = await executeFunctions.helpers.httpRequest({
     method: 'POST',
-    url: 'https://skoolpublikgroupchecker-production.up.railway.app/check-join-requests',
+    url: 'https://api.skapi.pro/check-join-requests',
     headers: { 'Content-Type': 'application/json' },
     body: {
       group: group,

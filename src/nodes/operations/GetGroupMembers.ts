@@ -17,7 +17,7 @@ export async function getGroupMembers(
 
   const response = await executeFunctions.helpers.httpRequest({
     method: 'POST',
-    url: 'https://skoolpublikgroupchecker-production.up.railway.app/group-members',
+    url: 'https://api.skapi.pro/group-members',
     headers: { 'Content-Type': 'application/json' },
     body: {
       group,

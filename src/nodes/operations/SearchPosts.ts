@@ -17,7 +17,7 @@ export async function searchPosts(
 
   const response = await executeFunctions.helpers.httpRequest({
     method: 'POST',
-    url: 'https://skoolpublikgroupchecker-production.up.railway.app/group-posts/search',
+    url: 'https://api.skapi.pro/group-posts/search',
     headers: { 'Content-Type': 'application/json' },
     body: {
       group,

@@ -17,7 +17,7 @@ export async function getPostComments(
 
   const response = await executeFunctions.helpers.httpRequest({
     method: 'POST',
-    url: 'https://skoolpublikgroupchecker-production.up.railway.app/group-posts/' + encodeURIComponent(postId) + '/comments',
+    url: 'https://api.skapi.pro/group-posts/' + encodeURIComponent(postId) + '/comments',
     headers: { 'Content-Type': 'application/json' },
     body: {
       group,
