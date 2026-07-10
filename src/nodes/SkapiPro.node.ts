@@ -19,6 +19,7 @@ import { getPostComments } from './operations/GetPostComments';
 import { getGroupMembers } from './operations/GetGroupMembers';
 import { getCreatorAnalytics } from './operations/GetCreatorAnalytics';
 import { postInteraction } from './operations/PostInteraction';
+import { getUsageStats } from './operations/GetUsageStats';
 
 export class SkapiPro implements INodeType {
   description: INodeTypeDescription = {
@@ -58,6 +59,7 @@ export class SkapiPro implements INodeType {
           { name: 'Member', value: 'member', description: 'View group members' },
           { name: 'Analytics', value: 'analytics', description: 'Creator analytics' },
           { name: 'Interaction', value: 'interaction', description: 'Like/unlike posts' },
+          { name: 'Usage', value: 'usage', description: 'View API usage stats' },
         ],
         default: 'joinRequest',
       },
@@ -161,6 +163,18 @@ export class SkapiPro implements INodeType {
           { name: 'Post Interaction', value: 'postInteraction', description: 'Like, unlike, or get likes on a post', action: 'Post interaction' },
         ],
         default: 'postInteraction',
+      },
+
+      // ===== USAGE OPERATIONS =====
+      {
+        displayName: 'Operation',
+        name: 'operation',
+        type: 'options',
+        displayOptions: { show: { resource: ['usage'] } },
+        options: [
+          { name: 'Get Usage Stats', value: 'getUsageStats', description: 'View your monthly API usage and quota', action: 'Get usage stats' },
+        ],
+        default: 'getUsageStats',
       },
 
       // ===== SHARED PARAMETERS =====
@@ -407,6 +421,16 @@ export class SkapiPro implements INodeType {
         switch (operation) {
           case 'postInteraction':
             result = await postInteraction(this, jwtToken, clientId);
+            break;
+          default:
+            throw new Error(`Unknown operation: ${operation}`);
+        }
+        break;
+
+      case 'usage':
+        switch (operation) {
+          case 'getUsageStats':
+            result = await getUsageStats(this, jwtToken, clientId);
             break;
           default:
             throw new Error(`Unknown operation: ${operation}`);
