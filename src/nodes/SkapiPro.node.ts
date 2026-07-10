@@ -22,8 +22,8 @@ export class SkapiPro implements INodeType {
     displayName: 'Skool API (Skapi.pro)',
     name: 'skapiPro',
     icon: {
-      light: 'file:skapi.svg',
-      dark: 'file:skapi.dark.svg',
+      light: 'file:skapi.png',
+      dark: 'file:skapi.dark.png',
     },
     group: ['transform'],
     version: 1,
