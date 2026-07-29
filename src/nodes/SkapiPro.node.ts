@@ -256,9 +256,26 @@ export class SkapiPro implements INodeType {
         type: 'options',
         displayOptions: { show: { operation: ['processJoinRequest'] } },
         options: [
-          { name: 'Name', value: 'name' },
-          { name: 'Email', value: 'email' },
-          { name: 'Profile URL', value: 'profile_url' },
+          {
+            name: 'Name',
+            value: 'name',
+          },
+          {
+            name: 'Email',
+            value: 'email',
+          },
+          {
+            name: 'Profile URL',
+            value: 'profile_url',
+          },
+          {
+            name: 'User ID',
+            value: 'user_id',
+          },
+          {
+            name: 'Username',
+            value: 'username',
+          },
         ],
         default: 'name',
       },

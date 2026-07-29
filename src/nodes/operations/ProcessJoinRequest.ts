@@ -23,7 +23,7 @@ export async function processJoinRequest(
     body: {
       group: group,
       action: action,
-      [searchBy]: searchValue,
+      search_params: { [searchBy]: searchValue },
       jwt_token: jwtToken,
       client_id: clientId,
     },
